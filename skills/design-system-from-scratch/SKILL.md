@@ -61,7 +61,34 @@ If the repo already has a real product UI, component library, or design tokens t
      - `docs/design-system/tailwind.tokens.js`
      - `docs/design-system/visual-principles.md`
 
-8. Prototype only after the system exists.
+8. Protect the project instructions.
+   - After the design-system artifacts are written, search the repository root for an existing agent instruction file in this order: `AGENTS.md`, `agents.md`, `AGENT.md`, `agent.md`.
+   - If one exists, update it. If none exists, create `AGENTS.md` at the repository root.
+   - Add a short "Design System Guard" section explaining that the project's visual layer is protected by the design system: the design system is the source of truth for visual decisions, and UI work must follow it before introducing new styles, tokens, or components.
+   - List the design-system files that own the contract. Include required files and any optional files that were actually created, for example:
+     - `docs/design-system/manifest.json`
+     - `docs/design-system/design-system.md`
+     - `docs/design-system/reference-board.md`
+     - `docs/design-system/component-map.md`
+     - `docs/design-system/tokens.css`
+     - `docs/design-system/tailwind.tokens.js`
+     - `docs/design-system/visual-principles.md`
+   - Keep this instruction block concise. Do not duplicate the full design-system documentation inside the agent instruction file.
+   - Use this shape, adapted to the project's language and actual file list:
+     ```md
+     ## Design System Guard
+
+     The visual layer of this project is protected by the design system. The design system is the source of truth for UI decisions: colors, typography, spacing, components, layout, motion, and visual QA. Before changing UI, read and follow these files:
+
+     - `docs/design-system/manifest.json`
+     - `docs/design-system/design-system.md`
+     - `docs/design-system/reference-board.md`
+     - `docs/design-system/component-map.md`
+
+     Do not introduce new visual tokens, component variants, or layout patterns unless they are added to the design-system contract first.
+     ```
+
+9. Prototype only after the system exists.
    - If the user requested screens in the same run, implement a small representative slice first: one page shell plus core components and states.
    - Run visual QA across mobile, tablet, and desktop.
    - Summarize design-system deviations and whether they should become new rules or be removed.
@@ -80,4 +107,4 @@ Do not copy references literally. Extract principles: hierarchy, density, rhythm
 
 ## Output Standard
 
-The design system is ready when another Codex run can build UI from the artifacts without re-asking basic visual questions. The final response should include created files, chosen direction, open questions, verification performed, and the recommended next UI slice.
+The design system is ready when another Codex run can build UI from the artifacts without re-asking basic visual questions. The final response should include created files, the updated or created project agent instruction file, chosen direction, open questions, verification performed, and the recommended next UI slice.

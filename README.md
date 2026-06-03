@@ -19,6 +19,7 @@ That contract usually lives in:
 - `docs/design-system/design-system.md`
 - `docs/design-system/component-map.md`
 - optional references, screenshots, tokens, and visual-principle docs
+- a short guard section in the project's agent instruction file: `AGENTS.md`, `agents.md`, `AGENT.md`, or `agent.md`
 
 ## Why It Exists
 
@@ -32,6 +33,8 @@ AI-generated UI often fails for the same reasons:
 - no source of truth for future changes.
 
 These skills add a deliberate preflight step. Codex has to inspect or define the system first, then implement UI against that system.
+
+They also update the project's agent instruction file after the design-system artifacts are written. That file becomes the persistent reminder for future runs: the visual layer is protected by the design system, and the design system is the source of truth.
 
 ## Included Skills
 
@@ -47,6 +50,8 @@ Use this when an existing product should constrain the design:
 
 The skill inventories evidence, extracts tokens, maps components, documents layout rules, records gaps, and creates design-system artifacts.
 
+After that, it updates or creates the project agent instruction file with a concise design-system guard and a list of source-of-truth files.
+
 ### `design-system-from-scratch`
 
 Use this when the product has no stable UI yet:
@@ -59,6 +64,8 @@ Use this when the product has no stable UI yet:
 - early design-system exploration.
 
 The skill starts from the brief and references, then defines direction, tokens, components, layout, accessibility, visual language, and governance rules.
+
+After that, it updates or creates the project agent instruction file with a concise design-system guard and a list of source-of-truth files.
 
 ## Install
 
@@ -103,7 +110,8 @@ For UI, frontend components, landing pages, dashboards, app screens, redesigns, 
 4. Create or update docs/design-system/manifest.json and docs/design-system/design-system.md before high-fidelity implementation.
 5. Reuse existing components and tokens before introducing new ones.
 6. If a token or component is missing, propose it in the manifest instead of hardcoding one-off values.
-7. End UI work with visual QA notes, verification commands, and any design-system deviations.
+7. Update or create the project agent instruction file and state that the visual layer is protected by the design system.
+8. End UI work with visual QA notes, verification commands, and any design-system deviations.
 ```
 
 ## Repository Structure
@@ -122,6 +130,19 @@ skills/
     references/
       manifest-schema.md
 ```
+
+## Agent Instruction Guard
+
+When a skill finishes writing the design-system artifacts, it searches the repository root for an instruction file in this order:
+
+1. `AGENTS.md`
+2. `agents.md`
+3. `AGENT.md`
+4. `agent.md`
+
+If none exists, it creates `AGENTS.md`.
+
+The guard stays short. It should say that the project's visual layer is protected by the design system, that the design system is the source of truth, and that future UI work must consult the listed design-system files before adding new styles, tokens, or components.
 
 ## Design Philosophy
 

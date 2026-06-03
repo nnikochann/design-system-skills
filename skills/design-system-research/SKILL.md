@@ -57,7 +57,32 @@ If the design system already exists and the task is to create a screen from it, 
      - `docs/design-system/visual-principles.md`
      - `docs/design-system/screenshots/`
 
-6. Continue or stop.
+6. Protect the project instructions.
+   - After the design-system artifacts are written, search the repository root for an existing agent instruction file in this order: `AGENTS.md`, `agents.md`, `AGENT.md`, `agent.md`.
+   - If one exists, update it. If none exists, create `AGENTS.md` at the repository root.
+   - Add a short "Design System Guard" section explaining that the project's visual layer is protected by the design system: the design system is the source of truth for visual decisions, and UI work must follow it before introducing new styles, tokens, or components.
+   - List the design-system files that own the contract. Include required files and any optional files that were actually created, for example:
+     - `docs/design-system/manifest.json`
+     - `docs/design-system/design-system.md`
+     - `docs/design-system/component-map.md`
+     - `docs/design-system/tokens.css`
+     - `docs/design-system/visual-principles.md`
+     - `docs/design-system/screenshots/`
+   - Keep this instruction block concise. Do not duplicate the full design-system documentation inside the agent instruction file.
+   - Use this shape, adapted to the project's language and actual file list:
+     ```md
+     ## Design System Guard
+
+     The visual layer of this project is protected by the design system. The design system is the source of truth for UI decisions: colors, typography, spacing, components, layout, motion, and visual QA. Before changing UI, read and follow these files:
+
+     - `docs/design-system/manifest.json`
+     - `docs/design-system/design-system.md`
+     - `docs/design-system/component-map.md`
+
+     Do not introduce new visual tokens, component variants, or layout patterns unless they are added to the design-system contract first.
+     ```
+
+7. Continue or stop.
    - If the user asked only for research, stop after the artifacts and summarize findings, open questions, and next recommended implementation step.
    - If the user asked for UI implementation too, proceed only after the artifacts exist. Treat the manifest as the source of truth.
 
@@ -69,6 +94,8 @@ If the design system already exists and the task is to create a screen from it, 
 
 `component-map.md` is the engineering handoff. Link component names to file paths, variants, usage rules, states, and gaps.
 
+The project agent instruction file (`AGENTS.md`, `agents.md`, `AGENT.md`, or `agent.md`) is the persistent guardrail. It should point future agents back to the design-system files and state that the design system is authoritative for visual work.
+
 ## Verification
 
 Before finishing a UI task that used this skill:
@@ -76,4 +103,5 @@ Before finishing a UI task that used this skill:
 - Run relevant lint, typecheck, tests, and build commands when available.
 - Render affected screens in browser or Playwright across mobile, tablet, and desktop when possible.
 - Check token usage, typography hierarchy, spacing rhythm, overflow, responsive states, focus states, contrast, and visual drift from `manifest.json`.
+- Confirm the project agent instruction file exists and references the design-system source-of-truth files.
 - Report verification commands, screenshots or capture paths, deviations, and remaining risks.
